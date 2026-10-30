@@ -4,7 +4,7 @@ export const validate = (req,res, next) => {
     const error = validationResult(req)
 
     if(!error.isEmpty()) {
-        const custom = errors.formatWith((err)=>{
+        const custom = error.formatWith((err)=>{
             return `${err.path}: ${err.msg}`
         });
         return res.status(400).json(custom.array())

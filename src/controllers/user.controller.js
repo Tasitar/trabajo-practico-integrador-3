@@ -1,8 +1,13 @@
+import { matchedData } from "express-validator";
 import { userModel } from "../models/user.model.js";
+
 
 export const createUser = async (req, res) => {
     try {
-        const { username, email, password, role, profile } = req.body;
+
+        const validateData = matchedData(req)
+        
+        const { username, email, password, role, profile } = validateData;
 
         const newUser = await userModel.create({username,email,password,role,profile,});
 

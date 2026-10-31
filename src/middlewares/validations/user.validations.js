@@ -10,5 +10,45 @@ export const validationCreateUser = [
     .withMessage("El user tiene que que contener 3 o 20 letras")
     .isAlphanumeric()
     .withMessage("El nombre debe contener letras y numeros")
-]
+    .custom(async (username) => {
+        const user = await userModel.findOne({username})
+        if (user) throw new Error("Ese username ya existe use otro") 
+    }),
 
+    body("email")
+    .notEmpty()
+    .withMessage("El email no debe estar vacio")
+    .isEmail()
+    .withMessage("El email tiene que ser valido")
+    .custom(async (email) => {
+        const emailId = await userModel.findOne({email})
+        if (emailId) throw new Error("Ese email ya existe use otro")
+    }),
+
+    body("password")
+    .notEmpty()
+    .withMessage("La contraseña es no puede estar vacia")
+    .isLength({min: 8})
+    .withMessage("la contraseña debe de tener minio 8 caracteres")
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/)
+    .withMessage("la contraseña debe contener al menos una mayuscula,una minuscula y un numero"),
+
+    body("role")
+    .optional()
+    .isIn(["user", "admin"]),
+
+    body('profile.firstName')
+    .notEmpty()
+    .withMessage('El nombre no debe estar vacio')
+    .isLength({ min: 2, max: 50 })
+    .withMessage('El nombre debe tener entre 2 y 50 caracteres') 
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+    .withMessage('El nombre solo debe contener letras'),   
+    
+    body('profile.lastName') .notEmpty()
+    .withMessage('El apellido no debe estar vacio') 
+    .isLength({ min: 2, max: 50 })
+    .withMessage('El apellido debe tener entre 2 y 50 caracteres') 
+    .matches(/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/)
+    .withMessage('El apellido solo debe contener letras'),
+]

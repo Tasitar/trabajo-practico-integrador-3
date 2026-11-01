@@ -58,15 +58,18 @@ export const getUserById = async (req, res) => {
 
 export const updateUser = async (req, res) => {
     try {
-        const { id } = req.params;
-        const user = await userModel.findByIdAndUpdate(
-            id,
-            req.body,
-            { new: true }
-        );
+        const { id } =matchedData(req,{locations:["params"]});
+
+        const validateData = matchedData(req)
+
+        const user = await userModel.findByIdAndUpdate(id);
+
+        if (!user) {
+            return res.status(400).json({ok: false, msg:"usuario no encontrado"})
+        }
         return res.status(200).json({
             msg: "Usuario actualizado correctamente",
-            data: user,
+            data: validateData,
         });
     } catch (error) {
         console.log(error);
@@ -80,6 +83,14 @@ export const deleteUser = async (req, res) => {
     try {
         const { id } = req.params;
         const user = await userModel.findByIdAndDelete(id);
+
+        if (!user) {
+            return res.status(404).json({
+                ok: false,
+                msg: "Usuario no encontrado",
+            });
+        }
+
         return res.status(200).json({
             msg: "Usuario eliminado correctamente",
             data: user,

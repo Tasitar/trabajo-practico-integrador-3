@@ -9,10 +9,15 @@ const userSchema = new Schema(
     },
     email: {
         type: String,
+        required: true,
         unique: true,
+        lowercase: true,
+        trim: true,
     },
     password: {
-        type: String
+        type: String,
+        required: true,
+        select: false,
     },
 
     role: {
@@ -37,5 +42,12 @@ const userSchema = new Schema(
     }
 }
 )
+
+userSchema.set("toJSON", {
+    transform(_document, returnedObject) {
+        delete returnedObject.password;
+        return returnedObject;
+    },
+});
 
 export const userModel = model("User",userSchema)

@@ -2,7 +2,6 @@ import { matchedData } from "express-validator";
 import { comparePassword } from "../helpers/bcrypt.helper.js";
 import { createToken } from "../helpers/jwt.helper.js";
 import { userModel } from "../models/user.model.js";
-import { sign } from "jsonwebtoken";
 
 export const login = async (req, res) => {
   try {
@@ -30,7 +29,7 @@ export const login = async (req, res) => {
 
     return res.status(200).json({
       msg: "Inicio de sesión correcto",
-      
+
     });
   } catch (error) {
     console.log(error);
@@ -38,4 +37,9 @@ export const login = async (req, res) => {
       msg: "Error interno del server al iniciar sesión",
     });
   }
+};
+
+export const logout = (req, res) => {
+  res.clearCookie("token");
+  return res.status(200).json({ msg: "logout exitoso" });
 };

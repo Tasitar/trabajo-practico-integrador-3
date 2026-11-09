@@ -2,8 +2,8 @@ import { Router } from "express";
 import {createUser,getAllUser,getUserById,updateUser,deleteUser,} from "../controllers/user.controller.js";
 import { validate } from "../middlewares/validate.js";
 import { validationCreateUser,validationUpdateUser,validationUserId } from "../middlewares/validations/user.validations.js";
-import { authenticate,requireAdmin } from "../middlewares/auth.js";
-
+import { authenticate } from "../middlewares/auth.js";
+import { requireAdmin } from "../middlewares/admin.js";
 export const userRoutes = Router()
 
 userRoutes.post("/users",validationCreateUser,validate,createUser)

@@ -5,8 +5,14 @@ import { userRoutes } from "./src/routes/user.routes.js"
 import { authRoutes } from "./src/routes/auth.routes.js"
 import { categoryRoutes } from "./src/routes/categories.routes.js"
 import { eventRoutes } from "./src/routes/events.routes.js"
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
 const app = express()
+app.use(cors({ origin: true, credentials: true }));
+app.use(cookieParser());
+
+
 app.use(express.json())
 
 const PORT = process.env.PORT

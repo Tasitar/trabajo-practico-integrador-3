@@ -2,7 +2,9 @@ import { Router } from "express";
 import { createCategory, getAllCategory, getCategoryById, updateCategory, deleteCategory } from "../controllers/categories.controller.js";
 import { validate } from "../middlewares/validate.js";
 import { validationCategoryId, validationCreateCategory, validationUpdateCategory } from "../middlewares/validations/categories.validations.js";
-import { authenticate, requireAdmin } from "../middlewares/auth.js";
+import { authenticate } from "../middlewares/auth.js";
+import { requireAdmin } from "../middlewares/admin.js";
+
 
 export const categoryRoutes = Router()
 

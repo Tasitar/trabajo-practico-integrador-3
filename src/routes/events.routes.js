@@ -2,7 +2,8 @@ import { Router } from "express";
 import { createEvent, getAllEvent, getEventById, updateEvent, deleteEvent } from "../controllers/events.controller.js";
 import { validate } from "../middlewares/validate.js";
 import { validationCreateEvent, validationEventId, validationUpdateEvent } from "../middlewares/validations/events.validations.js";
-import { authenticate, requireAdmin } from "../middlewares/auth.js";
+import { authenticate } from "../middlewares/auth.js";
+import {  requireAdmin } from "../middlewares/admin.js";
 
 export const eventRoutes = Router()
 
